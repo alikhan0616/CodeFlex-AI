@@ -99,9 +99,12 @@ const GenerateProgramPage = () => {
       }
 
       setConnecting(true);
-      await vapi.start({
-        // VAPI call configuration
-      });
+      await vapi.start(
+        undefined,
+        undefined,
+        undefined,
+        process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID
+      );
     } catch (error) {
       console.error("Error toggling call:", error);
       setConnecting(false);
@@ -153,10 +156,10 @@ const GenerateProgramPage = () => {
                 {isSpeaking
                   ? "speaking..."
                   : callActive
-                  ? "Listening..."
-                  : callEnded
-                  ? "Redirecting..."
-                  : "Waiting"}
+                    ? "Listening..."
+                    : callEnded
+                      ? "Redirecting..."
+                      : "Waiting"}
               </span>
             </div>
           </Card>
@@ -222,8 +225,8 @@ const GenerateProgramPage = () => {
               callActive
                 ? "bg-destructive hover:bg-destructive/90"
                 : callEnded
-                ? "bg-green-600 hover:bg-green-700"
-                : "bg-primary hover:bg-primary/90"
+                  ? "bg-green-600 hover:bg-green-700"
+                  : "bg-primary hover:bg-primary/90"
             } text-white relative`}
             onClick={toggleCall}
             disabled={connecting || callEnded}
@@ -236,10 +239,10 @@ const GenerateProgramPage = () => {
               {callActive
                 ? "End Call"
                 : connecting
-                ? "Connecting..."
-                : callEnded
-                ? "View Profile"
-                : "Start Call"}
+                  ? "Connecting..."
+                  : callEnded
+                    ? "View Profile"
+                    : "Start Call"}
             </span>
           </Button>
         </div>
