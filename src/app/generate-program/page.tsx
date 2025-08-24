@@ -19,6 +19,10 @@ const GenerateProgramPage = () => {
   const router = useRouter();
   const messageContainerRef = useRef<HTMLDivElement>(null);
 
+  const fullName = user?.firstName
+    ? `${user.firstName} ${user?.lastName || ""}`.trim()
+    : "There";
+
   useEffect(() => {
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollTop =
@@ -103,7 +107,13 @@ const GenerateProgramPage = () => {
         undefined,
         undefined,
         undefined,
-        process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID
+        process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID,
+        {
+          variableValues: {
+            full_name: fullName,
+            // TODO: send user._id as well
+          },
+        }
       );
     } catch (error) {
       console.error("Error toggling call:", error);
